@@ -1,5 +1,6 @@
 # Appies
 
+This app contains login, signup and dynamic gallery.
 # XCode 9.3.1 (Swift 4)
 
 ![screen shot 2018-07-27 at 2 11 15 am](https://user-images.githubusercontent.com/16849127/43289578-0b0e8fe2-9149-11e8-91d5-30631dc7358a.png)
