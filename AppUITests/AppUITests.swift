@@ -2,14 +2,14 @@
 //  AppUITests.swift
 //  AppUITests
 //
-//  Created by Procorner on 24/07/18.
+//  Created by Javed Multani on 24/07/18.
 //  Copyright © 2018 iOS. All rights reserved.
 //
 
 import XCTest
 
 class AppUITests: XCTestCase {
-        
+         var app: XCUIApplication!
     override func setUp() {
         super.setUp()
         
@@ -33,4 +33,17 @@ class AppUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    //Check Blank field validation
+    func testForLoginScreen() {
+        
+        let app = XCUIApplication()
+        app.textFields["Email"].tap()
+        
+        let element = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
+        element.tap()
+        app.secureTextFields["Password"].tap()
+        app.buttons["LOGIN"].tap()
+       
+       
+    }
 }

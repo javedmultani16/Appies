@@ -2,21 +2,87 @@
 //  AppDelegate.swift
 //  App
 //
-//  Created by Procorner on 24/07/18.
+//  Created by Javed Multani on 24/07/18.
 //  Copyright © 2018 iOS. All rights reserved.
 //
 
 import UIKit
 import CoreData
+import IQKeyboardManagerSwift
+import NVActivityIndicatorView
+import Realm
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var appRootController: UINavigationController?
+    var navMenuController: UINavigationController?
+    var navHomeController: UINavigationController?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let config = Realm.Configuration(
+            schemaVersion: 2,
+            migrationBlock: { migration, oldSchemaVersion in
+                
+                if (oldSchemaVersion < 2) {
+                    // Nothing to do!
+                    
+                }
+        })
+        Realm.Configuration.defaultConfiguration = config
+        
+//        let configCheck = Realm.Configuration();
+//        let configCheck2 = Realm.Configuration.defaultConfiguration;
+//        let schemaVersion = configCheck.schemaVersion
+//        print("Schema version \(schemaVersion) and configCheck2 \(configCheck2.schemaVersion)")
+        
+        let configCheck = Realm.Configuration();
+        do {
+            let fileUrlIs = try schemaVersionAtURL(configCheck.fileURL!)
+            print("schema version \(fileUrlIs)")
+        } catch  {
+            print(error)
+        }
+        
+//        var config = Realm.Configuration(
+//            // Set the new schema version. This must be greater than the previously used
+//            // version (if you've never set a schema version before, the version is 0).
+//            schemaVersion: 87,
+//
+//            // Set the block which will be called automatically when opening a Realm with
+//            // a schema version lower than the one set above
+//            migrationBlock: { migration, oldSchemaVersion in
+//                // We haven’t migrated anything yet, so oldSchemaVersion == 0
+//                if (oldSchemaVersion < 86) {
+//                    // Nothing to do!
+//                    // Realm will automatically detect new properties and removed properties
+//                    // And will update the schema on disk automatically
+//                }
+//        })
+        
+        // Tell Realm to use this new configuration object for the default Realm
+  //      Realm.Configuration.defaultConfiguration = config
+        
+        
         // Override point for customization after application launch.
+        UIApplication.shared.statusBarStyle = .lightContent
+        Thread.sleep(forTimeInterval: 2.0)
+        
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.placeholderFont = THEME_FONT_LIGHT(size: 14)
+        
+        NVActivityIndicatorView.DEFAULT_TEXT_COLOR = UIColor.white
+        NVActivityIndicatorView.DEFAULT_PADDING = CGFloat(0)
+        NVActivityIndicatorView.DEFAULT_COLOR = UIColor.white
+        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_MINIMUM_DISPLAY_TIME = 0
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballRotateChase
+        NVActivityIndicatorView.DEFAULT_BLOCKER_MESSAGE_FONT = THEME_FONT_MEDIUM(size: 20)
+
         return true
     }
 
